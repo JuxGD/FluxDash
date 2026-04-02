@@ -4,7 +4,9 @@ A Fluxer bot for Geometry Dash lovers!
 
 ## AI, Agents, LLMs
 
-Please refer to llms.txt, llms-full.txt, AGENTS.md or CLAUDE.md. :trollface:
+Please refer to llms.txt, llms-full.txt, AGENTS.md or CLAUDE.md, and CONTRIBUTING.md. Don't look at the README anymore. Go on check the files I said
+
+:trollface:
 
 ## TODO
 
