@@ -1,2 +1,4 @@
 .direnv
+.envvar
+.vscode
 /target

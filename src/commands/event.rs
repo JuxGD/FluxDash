@@ -12,5 +12,6 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let response = get_event();
 
     send_reply(api, &data.channel_id, &data.id, response.await.as_str()).await?;
+
     Ok(())
 }
