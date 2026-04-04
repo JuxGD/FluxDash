@@ -12,19 +12,62 @@ Please refer to llms.txt, llms-full.txt, AGENTS.md or CLAUDE.md, and CONTRIBUTIN
 
 Current (or future) bot features:
 
-- [ ] Getting level data (gd!level)
+- [ ] Getting arbitrary level data (`gd!level`)
   - [X] Name
   - [X] ID
   - [ ] Author
   - [X] Song ID
-  - [ ] Song artist - name (Newgrounds/Music Library)
+  - [ ] Song artist - song name (Newgrounds/Music Library)
   - [X] Difficulty rating 
   - [X] Stars
+  - [ ] Moons
   - [X] Likes
   - [X] Downloads
-- [X] Getting
-- [ ] Getting user data (gd!user)
-- [ ] Getting
+- [X] Getting daily, weekly level indes & time left (`gd!daily`, `gd!weekly`) 
+- [X] Getting event level index (`gd!index`)
+- [ ] Getting arbitrary user data (`gd!user`)
+  - [ ] Username
+  - [ ] Account ID
+  - [ ] Player ID
+  - [ ] Leaderboard placement
+  - [ ] Stars & Moons
+    - [ ] Amount of each difficulty beaten
+  - [ ] Diamonds
+  - [ ] Demons
+    - [ ] Amount of each demon difficulty beaten
+  - [ ] Creator Points
+- [ ] Sending message to arbitrary channel when level was recently rated, or rated level difficulty changes
+
+### Side quests
+
+- AREDL integration
+- Pointercrate integration
+- Pemonlist integration
+- The Shitty List/TSL+ integration
+- Geometry Dash Demon Ladder integration
+- Geometry Dash Demon Progression integration
+- Global Stats Viewer integration
+- Updated Leaderboard integration
+- Unrated Demon List integration
+- Insane Demon List integration
+- Hard Demon List integration
+- Song File Hub integration
+
+- For demons (`gd!level`)
+  - [ ] AREDL spot (Extreme only)
+  - [ ] Pointercrate spot (Classic Extreme only)
+  - [ ] Plist spot (Platformer only)
+  - [ ] GDDL Tier (Classic Extreme only)
+  - [ ] GDDP Tier (Classic Extreme only, if applicable to level)
+  - [ ] IDL spot (Insane only)
+  - [ ] HDL spot (Hard only)
+
+- For users (`gd!user`)
+  - [ ] Updated Leaderboard integration
+- [ ] Sending message to arbitrary channel when new Geode release
+- [ ] Sending message to arbitrary channel when new Geometry Dash update
+
+- [ ] Geometry Dash login maybe? Idk what we'd do with that though
 
 ## Private Servers
 
