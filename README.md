@@ -40,18 +40,18 @@ Current (or future) bot features:
 
 ### Side quests
 
-- AREDL integration
-- Pointercrate integration
-- Pemonlist integration
-- The Shitty List/TSL+ integration
-- Geometry Dash Demon Ladder integration
-- Geometry Dash Demon Progression integration
-- Global Stats Viewer integration
-- Updated Leaderboard integration
-- Unrated Demon List integration
-- Insane Demon List integration
-- Hard Demon List integration
-- Song File Hub integration
+- [ ] AREDL integration
+- [ ] Pointercrate integration
+- [ ] Pemonlist integration
+- [ ] The Shitty List/TSL+ integration
+- [ ] Geometry Dash Demon Ladder integration
+- [ ] Geometry Dash Demon Progression integration
+- [ ] Global Stats Viewer integration
+- [ ] Updated Leaderboard integration
+- [ ] Unrated Demon List integration
+- [ ] Insane Demon List integration
+- [ ] Hard Demon List integration
+- [ ] Song File Hub integration
 
 - For demons (`gd!level`)
   - [ ] AREDL spot (Extreme only)
