@@ -1,6 +1,9 @@
 # FluxDash
 
-A Fluxer bot for Geometry Dash lovers!
+A Fluxer bot for Geometry Dash lovers! Still very much a WIP, contributions are appreciated!
+
+FluxDash was made with `fluxer-rs`.
+
 
 ## AI, Agents, LLMs
 
@@ -87,6 +90,32 @@ Once with a working dev environment, FluxDash can be built with `cargo build`
 
 ## Running
 
+FluxDash is available as a crate. Install it:
+
+```bash
+cargo install fluxdash
+```
+
+After that, it can be ran with:
+
+```bash
+~/.cargo/bin/fluxdash
+```
+
+FluxDash can also be ran in the dev environment:
+
+```bash
+cargo run
+```
+
+Alternatively, after building, the binary will be in the repo directory:
+
+```bash
+./target/debug/fluxdash
+```
+
+---
+
 Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button near to the "Bot token" text field is clicked.
 
-If running in a dev environment (`cargo run`), put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.
+If running with `cargo build`, one can also put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.
