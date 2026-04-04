@@ -8,9 +8,23 @@ Please refer to llms.txt, llms-full.txt, AGENTS.md or CLAUDE.md, and CONTRIBUTIN
 
 :trollface:
 
-## TODO
+## To-do list / What to help with
 
-Everything lol
+Current (or future) bot features:
+
+- [ ] Getting level data (gd!level)
+  - [X] Name
+  - [X] ID
+  - [ ] Author
+  - [X] Song ID
+  - [ ] Song artist - name (Newgrounds/Music Library)
+  - [X] Difficulty rating 
+  - [X] Stars
+  - [X] Likes
+  - [X] Downloads
+- [X] Getting
+- [ ] Getting user data (gd!user)
+- [ ] Getting
 
 ## Private Servers
 
@@ -21,3 +35,7 @@ FluxDash uses `gdutils`, which is meant to work with the official Geometry Dash 
 This repository provides an `.envrc` and a Nix flake. By doing `direnv allow` with Nix and direnv installed, one can get a basically exact replica of the development environment used. For this to work, Nix's "flakes" and "nix-command" features have to be enabled.
 
 Once with a working dev environment, FluxDash can be built with `cargo build`
+
+## Running
+
+Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button next to the "Bot token" text field is clicked.

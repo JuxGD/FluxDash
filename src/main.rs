@@ -1,6 +1,7 @@
 use fluxer_rs::{error::FluxerRsError, fluxerbot::FluxerBot};
 use std::env;
 use std::process::exit;
+use dotenvy::dotenv;
 
 use crate::dispatch::FluxDashDispatchHandler;
 
@@ -10,6 +11,8 @@ pub mod dispatch;
 #[tokio::main]
 async fn main() -> Result<(), FluxerRsError> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("debug")).init();
+
+    dotenv().ok();
 
     let bot_token = env::var("FLUXER_BOT_TOKEN");
 

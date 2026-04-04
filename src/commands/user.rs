@@ -17,7 +17,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         send_reply(fluxer_api, &data.channel_id, &data.id, HELP_MESSAGE).await?;
     } else {
         user = args.first().unwrap();
-        send_reply(fluxer_api, &data.channel_id, &data.id, &format!("Stats for GD user {}:\nStars:", user)).await?;
+        send_reply(fluxer_api, &data.channel_id, &data.id, "still not implemented :p\n - Jux, the developer").await?;
     }
     
     Ok(())
