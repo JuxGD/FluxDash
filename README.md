@@ -38,4 +38,6 @@ Once with a working dev environment, FluxDash can be built with `cargo build`
 
 ## Running
 
-Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button next to the "Bot token" text field is clicked.
+Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button near to the "Bot token" text field is clicked.
+
+If running in a dev environment (`cargo run`), put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.

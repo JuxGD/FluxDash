@@ -24,8 +24,8 @@ async fn main() -> Result<(), FluxerRsError> {
         exit(1);
     }
 
+    println!{"Bot token accepted. If \"Invalid Token\" appears in the debug output, please double check that the token is correct."}
     let bot_token_real = bot_token.unwrap();
-    println!("{}", bot_token_real);
 
     let bot = FluxerBot::init(
         bot_token_real,

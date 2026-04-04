@@ -852,6 +852,8 @@ dependencies = [
 [[package]]
 name = "gdutils"
 version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "283bcc18bd768dadef3df491dd3a187ef7bedfe3e0a1fa807724f19a15c9d910"
 dependencies = [
  "base64 0.22.1",
  "colonparse",
@@ -3298,7 +3300,8 @@ checksum = "9edde0db4769d2dc68579893f2306b26c6ecfbe0ef499b013d731b7b9247e0b9"
 [[package]]
 name = "xor_cryptor_keylen"
 version = "2.0.4"
-source = "git+https://github.com/JuxGD/xor_cryptor_keylen?tag=v2.0.41#e60c69640f2e4f739662600af325076064d09c3e"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9321d3a4a88cdc8adb0142be0fdd73e3365e8fb7e7ad6e0d9236873c47318662"
 dependencies = [
  "rand 0.8.5",
  "rand_chacha 0.3.1",

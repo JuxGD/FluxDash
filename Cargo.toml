@@ -7,7 +7,7 @@ edition = "2024"
 env_logger = "0.11.9"
 log = "0.4.29"
 fluxer-rs = "0.1.3"
-gdutils = {path = "../gdutils"}
+gdutils = "0.1.0"
 dotenvy = "0.15.7"
 
 [dependencies.tokio]
