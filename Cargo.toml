@@ -6,6 +6,7 @@ authors = [ "JuxGD <@JuxGD>" ]
 description = "Geometry Dash bot for Fluxer! (WIP, contributions appreciated!"
 homepage = "https://codeberg.org/JuxGD/FluxDash"
 repository = "https://github.com/JuxGD/FluxDash"
+license = "MIT"
 
 [dependencies]
 env_logger = "0.11.9"
