@@ -8,8 +8,8 @@ use fluxer_rs::{
 async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
 
-    let response = get_weekly();
+    let weekly = get_weekly().await;
 
-    send_reply(api, &data.channel_id, &data.id, response.await.as_str()).await?;
+    send_reply(api, &data.channel_id, &data.id, format!("{:?}", weekly).as_str()).await?;
     Ok(())
 }

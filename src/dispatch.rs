@@ -12,12 +12,13 @@ use fluxer_rs::{
 };
 
 use crate::commands::{
-    ping::PingCommand,
-    user::UserCommand,
-    daily::DailyCommand,
-    weekly::WeeklyCommand,
-    event::EventCommand,
-    wrong::WrongCommand
+    ping::PingCommand
+,   user::UserCommand
+,   daily::DailyCommand
+,   weekly::WeeklyCommand
+,   event::EventCommand
+,   wrong::WrongCommand
+,   level::LevelCommand
 };
 
 pub struct FluxDashDispatchHandler {}
@@ -28,15 +29,16 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
         data: MessageData,
         api: &FluxerApiHandler,
     ) -> Result<(), FluxerRsError> {
-        let mut cmd_handler = CommandHandler::init("gd!".to_string());
+        let mut cmd_handler = CommandHandler::init(String::from("gd!"));
 
         register_commands!(cmd_handler,[
-            {"ping", PingCommand},
-            {"user", UserCommand},
-            {"daily", DailyCommand},
-            {"weekly", WeeklyCommand},
-            {"event", EventCommand},
-            {"", WrongCommand}
+            {"ping", PingCommand}
+        ,   {"user", UserCommand}
+        ,   {"daily", DailyCommand}
+        ,   {"weekly", WeeklyCommand}
+        ,   {"event", EventCommand}
+        ,   {"", WrongCommand}
+        ,   {"level", LevelCommand}
         ]);
 
         cmd_handler.handle(&data, api).await

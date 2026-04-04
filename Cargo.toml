@@ -7,10 +7,10 @@ edition = "2024"
 env_logger = "0.11.9"
 log = "0.4.29"
 fluxer-rs = "0.1.3"
-gdutils = {path = "../gddata"}
+gdutils = {path = "../gdutils"}
 
 [dependencies.tokio]
-version = "1.49.0"
+version = "1.51.0"
 features = ["rt-multi-thread", "macros"]
 
 [dev-dependencies]

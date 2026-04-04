@@ -9,9 +9,9 @@ use fluxer_rs::{
 async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
 
-    let response = get_event();
+    let event = get_event().await;
 
-    send_reply(api, &data.channel_id, &data.id, response.await.as_str()).await?;
+    send_reply(api, &data.channel_id, &data.id, format!("{:?}", event).as_str()).await?;
 
     Ok(())
 }
