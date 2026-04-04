@@ -12,7 +12,7 @@ Please refer to llms.txt, llms-full.txt, AGENTS.md or CLAUDE.md, and CONTRIBUTIN
 
 Current (or future) bot features:
 
-- [ ] Getting arbitrary level data (`gd!level`)
+- [X] Getting arbitrary level data (`gd!level`)
   - [X] Name
   - [X] ID
   - [ ] Author
@@ -23,19 +23,25 @@ Current (or future) bot features:
   - [ ] Moons
   - [X] Likes
   - [X] Downloads
-- [X] Getting daily, weekly level indes & time left (`gd!daily`, `gd!weekly`) 
-- [X] Getting event level index (`gd!index`)
-- [ ] Getting arbitrary user data (`gd!user`)
-  - [ ] Username
+  - [ ] Work with level name (searches and returns data for most popular)
+- [ ] Getting timely level info (`gd!daily`, `gd!weekly`, `gd!event`)
+    - [X] Index (i.e. daily level number)
+    - [X] Time Left (not for event levels)
+    - [ ] Actual level info (like with `gd!level`)
+- [X] Getting arbitrary user data (`gd!user`)
+  - [X] Username
   - [ ] Account ID
   - [ ] Player ID
-  - [ ] Leaderboard placement
-  - [ ] Stars & Moons
+  - [X] Leaderboard placement
+  - [X] Stars & Moons
     - [ ] Amount of each difficulty beaten
-  - [ ] Diamonds
-  - [ ] Demons
+  - [X] User Coins
+  - [X] Secret Coins
+  - [X] Diamonds
+  - [X] Demons
     - [ ] Amount of each demon difficulty beaten
-  - [ ] Creator Points
+  - [x] Creator Points
+  - [ ] Work with username (serches and returns data for most popular)
 - [ ] Sending message to arbitrary channel when level was recently rated, or rated level difficulty changes
 
 ### Side quests
