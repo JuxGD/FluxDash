@@ -1,6 +1,6 @@
 [package]
 name = "fluxdash"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 authors = [ "JuxGD <@JuxGD>" ]
 description = "Geometry Dash bot for Fluxer! (WIP, contributions appreciated!"
@@ -11,7 +11,7 @@ repository = "https://github.com/JuxGD/FluxDash"
 env_logger = "0.11.9"
 log = "0.4.29"
 fluxer-rs = "0.1.3"
-gdutils = "0.1.3"
+gdutils = "0.1.4"
 dotenvy = "0.15.7"
 
 [dependencies.tokio]

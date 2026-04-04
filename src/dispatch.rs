@@ -34,11 +34,12 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
         register_commands!(cmd_handler,[
             {"ping", PingCommand}
         ,   {"user", UserCommand}
+        ,   {"level", LevelCommand}
         ,   {"daily", DailyCommand}
         ,   {"weekly", WeeklyCommand}
         ,   {"event", EventCommand}
+        ,   {"*", WrongCommand}
         ,   {"", WrongCommand}
-        ,   {"level", LevelCommand}
         ]);
 
         cmd_handler.handle(&data, api).await

@@ -30,6 +30,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     +   "Creator Points: " + &user.ctpoints.to_string()
     ;
 
+    send_reply(fluxer_api, &data.channel_id, &data.id, &message).await?;
 
     Ok(())
 }

@@ -628,7 +628,7 @@ checksum = "5baebc0774151f905a1a2cc41989300b1e6fbb29aff0ceffa1064fdd3088d582"
 
 [[package]]
 name = "fluxdash"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
  "dotenvy",
  "env_logger",
@@ -789,9 +789,9 @@ dependencies = [
 
 [[package]]
 name = "gdutils"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "23dc5533ae20e617d43c29512c56bd528f0dbbff42f654b4f2311d00fa5d57c7"
+checksum = "ef74d69ff3222b1b1052096c817c73935bffa725adcda3e25d96d27f281c00a1"
 dependencies = [
  "base64 0.22.1",
  "colonparse",
