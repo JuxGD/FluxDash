@@ -1,8 +1,13 @@
+
 use fluxer_rs::{
     api::{FluxerApiHandler},
     error::FluxerRsError,
     gateway::dispatch::DispatchHandlerTrait,
-    high_level::command_handler::CommandHandler,
+    high_level::{
+        command_handler::{
+            CommandHandler
+        }
+    },
     register_commands,
     serde::types::{
         message::{
@@ -38,10 +43,12 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
         ,   {"daily", DailyCommand}
         ,   {"weekly", WeeklyCommand}
         ,   {"event", EventCommand}
-        ,   {"*", WrongCommand}
         ,   {"", WrongCommand}
         ]);
 
-        cmd_handler.handle(&data, api).await
+        match cmd_handler.handle(&data, api).await {
+            Ok(_) => Ok(()),
+            Err(_) => Ok(())
+        }
     }
 }

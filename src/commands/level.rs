@@ -10,7 +10,7 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
 
     let args = &feedback.args;
 
-    let level = get_level(String::from(*args.first().unwrap())).await;
+    let level = get_level(*args.first().unwrap()).await;
 
     let message =
         "Information for level: **".to_owned() + &level.name + "**\n"
@@ -18,6 +18,7 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     +   "Song ID: " + &level.song + "\n"
     +   "Difficulty: " + &level.rating + "\n"
     +   "Stars: " + &level.stars.to_string() + "\n"
+    +   "Quality: " + &level.quality.to_string() + "\n"
     +   "Likes: " + &level.likes.to_string() + "\n"
     +   "Downloads: " + &level.downloads.to_string() + "\n"
     ;

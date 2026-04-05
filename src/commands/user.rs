@@ -20,6 +20,8 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
 
     let message =
         "Information for user: **".to_owned() + &user.username + "**\n"
+    +   "Account ID: " + &user.account_id.to_string() + "\n"
+    +   "Player ID: " + &user.player_id.to_string() + "\n"
     +   "Stars: " + &user.stars.to_string() + "\n"
     +   "Moons: " + &user.moons.to_string() + "\n"
     +   "Diamonds: " + &user.diamonds.to_string() + "\n"
