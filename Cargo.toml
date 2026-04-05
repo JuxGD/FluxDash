@@ -1,6 +1,6 @@
 [package]
 name = "fluxdash"
-version = "0.1.2"
+version = "0.1.21"
 edition = "2024"
 authors = [ "JuxGD <@JuxGD>" ]
 description = "Geometry Dash bot for Fluxer! (WIP, contributions appreciated!"
