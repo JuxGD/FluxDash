@@ -789,9 +789,9 @@ dependencies = [
 
 [[package]]
 name = "gdutils"
-version = "0.1.421"
+version = "0.1.422"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cc154e13e0eaeab7d63a147a678ba59c86d7ed8afe2d0836587d4edaddccbb20"
+checksum = "9e4b190bf3c36a8e91f56089e0dfa9091fb73b34f721c3597b7d7b3c2adeda95"
 dependencies = [
  "base64 0.22.1",
  "colonparse",
