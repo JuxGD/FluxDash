@@ -18,12 +18,13 @@ Current (or future) bot features:
 - [X] Getting arbitrary level data (`gd!level`)
   - [X] Name
   - [X] ID
-  - [ ] Author
+  - [X] Author
   - [X] Song ID
   - [ ] Song artist - song name (Newgrounds/Music Library)
   - [X] Difficulty rating 
-  - [X] Stars
-  - [ ] Moons
+  - [X] "Quality" status (normal, featured, epic etc) and feature score (the higher that is, the higher in the featured tab the level is)
+  - [X] Stars/Moons
+  - [X] Coins (and if verified)
   - [X] Likes
   - [X] Downloads
   - [ ] Work with level name (searches and returns data for most popular)
@@ -33,18 +34,19 @@ Current (or future) bot features:
     - [ ] Actual level info (like with `gd!level`)
 - [X] Getting arbitrary user data (`gd!user`)
   - [X] Username
-  - [ ] Account ID
-  - [ ] Player ID
+  - [X] Account ID
+  - [X] Player ID
   - [X] Leaderboard placement
-  - [X] Stars & Moons
-    - [ ] Amount of each difficulty beaten
+  - [X] Stars
+  - [X] Moons
+  - [X] Amount of levels of each difficulty beaten
   - [X] User Coins
   - [X] Secret Coins
   - [X] Diamonds
   - [X] Demons
-    - [ ] Amount of each demon difficulty beaten
+    - [ ] Amount of levels of each demon difficulty beaten
   - [x] Creator Points
-  - [ ] Work with username (serches and returns data for most popular)
+  - [X] Work with username
 - [ ] Sending message to arbitrary channel when level was recently rated, or rated level difficulty changes
 
 ### Side quests

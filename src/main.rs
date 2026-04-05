@@ -1,3 +1,5 @@
+use gdutils::levels::get_level_info;
+
 use fluxer_rs::{error::FluxerRsError, fluxerbot::FluxerBot};
 use std::env;
 use std::process::exit;
@@ -7,6 +9,7 @@ use crate::dispatch::FluxDashDispatchHandler;
 
 pub mod commands;
 pub mod dispatch;
+pub mod utils;
 
 #[tokio::main]
 async fn main() -> Result<(), FluxerRsError> {

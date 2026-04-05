@@ -17,13 +17,7 @@ use fluxer_rs::{
 };
 
 use crate::commands::{
-    ping::PingCommand
-,   user::UserCommand
-,   daily::DailyCommand
-,   weekly::WeeklyCommand
-,   event::EventCommand
-,   wrong::WrongCommand
-,   level::LevelCommand
+    daily::DailyCommand, event::EventCommand, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand, wrong::HelpCommand
 };
 
 pub struct FluxDashDispatchHandler {}
@@ -37,13 +31,13 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
         let mut cmd_handler = CommandHandler::init(String::from("gd!"));
 
         register_commands!(cmd_handler,[
-            {"ping", PingCommand}
-        ,   {"user", UserCommand}
+            {"user", UserCommand}
         ,   {"level", LevelCommand}
         ,   {"daily", DailyCommand}
         ,   {"weekly", WeeklyCommand}
         ,   {"event", EventCommand}
-        ,   {"", WrongCommand}
+        ,   {"help", HelpCommand}
+        ,   {"", HelpCommand}
         ]);
 
         match cmd_handler.handle(&data, api).await {
