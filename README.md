@@ -6,6 +6,8 @@ Unofficial successor to f's GDStats bot (RIP, thanks f my goat)
 
 The bot part of FluxDash was made with `fluxer-rs`. The GD part of FluxDash was made with [`gdutils`](https://codeberg.org/JuxGD/gdutils-rs), which I started because of this bot!
 
+The official instance is being hosted by benjae#6963. thanks oomf <3. [Auth link](https://web.fluxer.app/oauth2/authorize?client_id=1488739811384334882&scope=bot&permissions=379968) to add the bot to a community
+
 Check for issues, PRs, etc in Codeberg @ https://codeberg.org/JuxGD/FluxDash and in GitHub @ https://github.org/JuxGD/FluxDash
 
 ## AI, Agents, LLMs
