@@ -10,7 +10,7 @@ use fluxer_rs::{
 };
 
 #[command(WeeklyCommand)]
-async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
+async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
 
     let weekly = get_weekly().await;
@@ -32,6 +32,7 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     +   "Daily #" + &weekly.timely_index.to_string() + "\n"
     +   "Time Left: " + &TimeHms::new(time_left).to_string()
     ;
-    send_reply(api, &data.channel_id, &data.id, &message).await?;
+    
+    send_reply(fluxer_api, &data.channel_id, &data.id, &message).await?;
     Ok(())
 }
