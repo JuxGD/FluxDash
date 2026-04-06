@@ -126,6 +126,6 @@ Alternatively, after building, the binary will be in the repo directory:
 
 Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button near to the "Bot token" text field is clicked.
 
-If running with `cargo build`, one can also put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.
+If running with `cargo run`, one can also put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.
 
 To automatically boot the bot back up if (when) it crashes, run the bot as a service (eg a systemd or openrc service on Linux). Make sure to configure the service so that it restarts FluxDash in the event of a crash, and that it stays running if the user the service is running on disconnects or logs out.
