@@ -19,12 +19,6 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let channel = Channel::new(&data.channel_id, api);
     let embeds = vec![
         EmbedBuilder::default()
-            .title(String::from("Unknown Command"))
-            .color(0xff0000)
-            .build()
-            .unwrap()
-        ,
-        EmbedBuilder::default()
             .title(String::from(HELP_MESSAGE_TITLE))
             .description(String::from(HELP_MESSAGE_DESCRIPTION))
             .color(0xffff00)
