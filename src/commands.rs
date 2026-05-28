@@ -1,4 +1,3 @@
-pub mod ping;
 pub mod user;
 pub mod daily;
 pub mod weekly;

@@ -1,5 +1,3 @@
-use gdutils::levels::get_level_info;
-
 use fluxer_rs::{error::FluxerRsError, fluxerbot::FluxerBot};
 use std::env;
 use std::process::exit;

@@ -9,7 +9,7 @@
     pkgs = nixpkgs.legacyPackages.${system};
   in {
     devShells.${system}.default = pkgs.mkShell {
-      packages = with pkgs; [ rustc cargo ];
+      packages = with pkgs; [ rustup rustc cargo ];
     };
 
     packages.${system}.default = import ./default.nix;

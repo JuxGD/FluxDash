@@ -5,7 +5,7 @@
 }:
 
 rustPlatform.buildRustPackage (finalAttrs: {
-  pname = "rider";
-  version = "0.0.0";
-  src = "./src";
+  pname = "fluxdash";
+  version = "0.3.0";
+  src = ./.;
 })
