@@ -11,7 +11,7 @@ use fluxer_rs::{
 use crate::commands::{
     daily::DailyCommand, event::EventCommand,
     level::LevelCommand, user::UserCommand,
-    weekly::WeeklyCommand, wrong::{HelpCommand, HELP_MESSAGE_TITLE, HELP_MESSAGE_DESCRIPTION}
+    weekly::WeeklyCommand, help::{HelpCommand, HELP_MESSAGE_TITLE, HELP_MESSAGE_DESCRIPTION}
 };
 
 pub struct FluxDashDispatchHandler {}
