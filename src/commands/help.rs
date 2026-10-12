@@ -11,6 +11,7 @@ pub const HELP_MESSAGE_DESCRIPTION: &str = "
 - `gd!daily` - Returns daily level info
 - `gd!weekly` - Returns weekly level info
 - `gd!event` - Returns event level info
+- `gd!aredl` - AREDL commands
 ";
 
 #[command(HelpCommand)]
