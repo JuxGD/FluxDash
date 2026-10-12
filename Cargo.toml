@@ -12,9 +12,10 @@ license = "MIT"
 env_logger = "0.11.9"
 log = "0.4.30"
 fluxer-rs = { git = "https://tangled.org/awoo.ren/fluxer-rs" }
-gdutils = "0.3.0"
+gdutils = "0.4.7"
 dotenvy = "0.15.7"
 time-hms = "0.3.1"
+color-eyre = "0.6.5"
 
 [dependencies.tokio]
 version = "1.52.3"

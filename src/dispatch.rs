@@ -9,9 +9,7 @@ use fluxer_rs::{
 };
 
 use crate::commands::{
-    daily::DailyCommand, event::EventCommand,
-    level::LevelCommand, user::UserCommand,
-    weekly::WeeklyCommand, help::{HelpCommand, HELP_MESSAGE_TITLE, HELP_MESSAGE_DESCRIPTION}
+    aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand
 };
 
 pub struct FluxDashDispatchHandler {}
@@ -31,6 +29,7 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
         ,   {"weekly", WeeklyCommand}
         ,   {"event", EventCommand}
         ,   {"help", HelpCommand}
+        ,   {"aredl", AREDLCommand}
         ,   {"", HelpCommand}
         ]);
 

@@ -4,3 +4,4 @@ pub mod weekly;
 pub mod event;
 pub mod help;
 pub mod level;
+pub mod aredl;
