@@ -42,7 +42,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         .unwrap();
         
     if args.is_empty() {
-        let _ = channel.send_embed_message(vec![base_help]).await;
+        let _ = channel.send_embed_message(vec![base_help]).await?;
     } else {
         match args[0] {
             "listinfo" => {
@@ -58,7 +58,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                         .color(0xff0000)
                                         .build()
                                         .unwrap(),
-                                ]).await;
+                                ]).await?;
 
                                 return Ok(())
                             }
@@ -73,7 +73,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                             .color(0xff0000)
                                             .build()
                                             .unwrap(),
-                                    ]).await;
+                                    ]).await?;
 
                                 return Ok(())
                                 }
@@ -89,7 +89,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                     )
                                     .build()
                                     .unwrap()
-                            ]).await;
+                            ]).await?;
                         },
                         Err(_) => {
                             let _ = channel.send_embed_message(vec![
@@ -101,11 +101,11 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                     .unwrap(),
                                 
                                 listinfo_help
-                            ]).await;
+                            ]).await?;
                         }
                     }
                 } else {
-                    let _ = channel.send_embed_message(vec![levelinfo_help]).await;
+                    let _ = channel.send_embed_message(vec![levelinfo_help]).await?;
                 }
             },
 
@@ -122,7 +122,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                         .color(0xff0000)
                                         .build()
                                         .unwrap(),
-                                ]).await;
+                                ]).await?;
 
                                 return Ok(())
                             }
@@ -137,7 +137,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                             .color(0xff0000)
                                             .build()
                                             .unwrap(),
-                                    ]).await;
+                                    ]).await?;
 
                                     return Ok(())
                                 }
@@ -169,7 +169,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                     .unwrap()
                             ];
 
-                            let _ = channel.send_embed_message(embed).await;
+                            let _ = channel.send_embed_message(embed).await?;
                         }
 
                         Err(_) => {
@@ -182,11 +182,11 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                                     .unwrap(),
                                 
                                 listinfo_help
-                            ]).await;
+                            ]).await?;
                         }
                     }
                 } else {
-                    let _ = channel.send_embed_message(vec![listinfo_help]).await;
+                    let _ = channel.send_embed_message(vec![listinfo_help]).await?;
                 }
             },
 
@@ -199,7 +199,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                         .unwrap(),
                     
                     base_help
-                ]).await;
+                ]).await?;
             }
         }
     }

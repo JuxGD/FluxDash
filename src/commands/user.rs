@@ -12,11 +12,14 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
 
     let args = &feedback.args;
 
-    if args.first().unwrap().is_empty() {
+    if args.is_empty() {
         let _ = channel.send_embed_message(vec![
             EmbedBuilder::default()
-                .description(String::from("**Command usage**: `gd!user <user>` where `<user>` is an account ID or username."))
-                .color(0xff0000)
+                .title(String::from("**gd!user**"))
+                .description("".to_owned()
+            +   "**Usage**:\n"
+            +   "`gd!user <user>` where `<user>` is an account ID or username")
+                .color(0xffff00)
                 .build()
                 .unwrap()
         ]).await;
@@ -52,7 +55,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                 .unwrap()
         }];
 
-        let _ = channel.send_embed_message(embed).await;
+        let _ = channel.send_embed_message(embed).await?;
     }
 
     Ok(())

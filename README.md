@@ -25,7 +25,7 @@ Current (or future) bot features:
   - [X] ID
   - [X] Author
   - [ ] Level length
-  - [X] Song ID
+  - [ ] Song ID
   - [ ] Song artist - song name (Newgrounds/Music Library)
   - [X] Difficulty rating 
   - [X] "Quality" status (normal, featured, epic etc) and feature score (the higher that is, the higher in the featured tab the level is)
@@ -33,11 +33,11 @@ Current (or future) bot features:
   - [X] Coins (and if verified)
   - [X] Likes
   - [X] Downloads
-  - [ ] Work with level name (searches and returns data for most popular)
-- [ ] Getting timely level info (`gd!daily`, `gd!weekly`, `gd!event`)
+  - [X] Work with level name (searches and returns data for most popular)
+- [X] Getting timely level info (`gd!daily`, `gd!weekly`, `gd!event`)
     - [X] Index (i.e. daily level number)
     - [X] Time Left (not for event levels)
-    - [ ] Actual level info (like with `gd!level`)
+    - [X] Actual level info (like with `gd!level`)
 - [X] Getting arbitrary user data (`gd!user`)
   - [X] Username
   - [X] Account ID
@@ -45,7 +45,7 @@ Current (or future) bot features:
   - [X] Leaderboard placement
   - [X] Stars
   - [X] Moons
-  - [X] Amount of levels of each difficulty beaten
+  - [ ] Amount of levels of each difficulty beaten
   - [X] User Coins
   - [X] Secret Coins
   - [X] Diamonds
@@ -57,7 +57,10 @@ Current (or future) bot features:
 
 ### Side quests
 
-- [ ] AREDL integration
+- [X] AREDL integration
+  - [X] Show placement info by placement (incomplete)
+  - [X] Show level info by placement
+  - [X] Send AREDL updates to arbitrary channel
 - [ ] Pointercrate integration
 - [ ] Pemonlist integration
 - [ ] The Shitty List/TSL+ integration
@@ -124,8 +127,8 @@ Alternatively, after building, the binary will be in the repo directory:
 
 ---
 
-Provide the `FLUXER_BOT_TOKEN` environment variable. This corresponds to the string shown in Fluxer Application settings when the "Regenerate" button near to the "Bot token" text field is clicked.
+Provide the `FLUXER_BOT_TOKEN` and `AREDL_API_TOKEN` environment variable. Respectively, they correspond to the string shown in Fluxer Application settings when the "Regenerate" button near to the "Bot token" text field is clicked, and to one of an AREDL account's API tokens.
 
-If running with `cargo run`, one can also put a `.env` file at the root of the project directory, with `export FLUXER_BOT_TOKEN="<bot_token>"` in it, where `<bot_token>` is the token.
+If running with `cargo run`, one can also put a `.env` file at the root of the project directory, with the corresponding `export <var>=<value>` lines in it.
 
 To automatically boot the bot back up if (when) it crashes, run the bot as a service (eg a systemd or openrc service on Linux). Make sure to configure the service so that it restarts FluxDash in the event of a crash, and that it stays running if the user the service is running on disconnects or logs out.

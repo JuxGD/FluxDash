@@ -1,4 +1,3 @@
-
 use fluxer_rs::{
     api::{FluxerApiHandler, channels::Channel},
     error::{CommandHandlerError, FluxerRsError},
@@ -9,7 +8,7 @@ use fluxer_rs::{
 };
 
 use crate::commands::{
-    aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand
+    admin_setup::setup::SetupCommand, aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand,
 };
 
 pub struct FluxDashDispatchHandler {}
@@ -51,7 +50,7 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
                                 .color(0xffff00)
                                 .build()
                                 .unwrap()
-                        ]).await;
+                        ]).await?;
 
                         Err(error)
                     }

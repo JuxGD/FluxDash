@@ -27,7 +27,7 @@ async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
             .unwrap()
     ];
 
-    let _ = channel.send_embed_message(embeds).await;
+    let _ = channel.send_embed_message(embeds).await?;
 
     Ok(())
 }

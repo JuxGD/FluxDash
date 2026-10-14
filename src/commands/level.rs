@@ -17,19 +17,20 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         EmbedBuilder::default()
             .title(String::from("gd!level"))
             .description("".to_owned()
-        +   "**Usage:*"
+        +   "**Usage:**\n"
         +   "`gd!level <levelID/levelname>`. If the level has a space, use double quotes (e.g. `gd!level \"Blade of Justice\"`)"
         )
+        .color(0xffff00)
         .build()
         .unwrap()
     ];
 
-    if args.first().unwrap().is_empty() {
-        let _ = channel.send_embed_message(help_embed).await;
+    if args.is_empty() {
+        let _ = channel.send_embed_message(help_embed).await?;
     } else {
-        let query = args.first().unwrap();
+        let query = args[0];
 
-        let level = if query.parse::<i32>().is_ok() { download_level_by_id(*query).await.unwrap() } else { download_level_by_name(*query).await.unwrap() };
+        let level = if query.parse::<i32>().is_ok() { download_level_by_id(query).await.unwrap() } else { download_level_by_name(query).await.unwrap() };
         
         let level_info = build_level(&level_object_to_hashmap(level).unwrap());
 
@@ -54,7 +55,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                     +   "Coins: " + &level_info.coins.to_string() + &verified_coins(level_info.verified_coins) + "\n"
                     +   "Likes: " + &level_info.likes.to_string() + "\n"
                     +   "Downloads: " + &level_info.downloads.to_string() + "\n"
-                    +   "Song ID: " + &level_info.song_ids.unwrap()[0].to_string() + "\n"
+                    +   "Song ID: " + &level_info.custom_song_id.to_string() + "\n"
                     )
                     .color(0x0055ff)
                     .build()
@@ -69,7 +70,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
             ];
         }
 
-        let _ = channel.send_embed_message(embed).await;
+        let _ = channel.send_embed_message(embed).await?;
     }
 
     Ok(())

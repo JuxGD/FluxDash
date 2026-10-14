@@ -32,7 +32,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         +   "Coins: " + &level_info.coins.to_string() + &verified_coins(level_info.verified_coins) + "\n"
         +   "Likes: " + &level_info.likes.to_string() + "\n"
         +   "Downloads: " + &level_info.downloads.to_string() + "\n"
-        +   "Song ID: " + &level_info.song_ids.unwrap()[0].to_string() + "\n"
+        +   "Song ID: " + &level_info.custom_song_id.to_string() + "\n"
         +   "\n"
         +   "Event #" + &event.timely_index.to_string() + "\n"
         )
@@ -41,7 +41,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         .unwrap()
     ];
     
-    let _ = channel.send_embed_message(embed).await;
+    let _ = channel.send_embed_message(embed).await?;
     
     Ok(())
 }
