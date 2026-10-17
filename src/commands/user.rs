@@ -1,8 +1,6 @@
 use gdutils::gd::{users::get_user, utils::GDQuery};
 use fluxer_rs::{
-    api::channels::Channel,
-    command,
-    serde::types::message::EmbedBuilder
+    api::channels::Channel, command, serde::types::message::Embed
 };
 
 #[command(UserCommand)]
@@ -13,25 +11,22 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let args = &feedback.args;
 
     if args.is_empty() {
-        let _ = channel.send_embed_message(vec![
-            EmbedBuilder::default()
+        channel.send_embed_message(vec![
+            Embed::builder()
                 .title(String::from("**gd!user**"))
-                .description("".to_owned()
+                .description(String::new()
             +   "**Usage**:\n"
             +   "`gd!user <user>` where `<user>` is an account ID or username")
                 .color(0xffff00)
                 .build()
-                .unwrap()
-        ]).await;
+        ]).await?;
     } else {
         let user_info = get_user(GDQuery::new(args.first().unwrap())).await;
         
-        let embed = vec![if user_info.is_ok() {
-            let user_info = user_info.unwrap();
-
-            EmbedBuilder::default()
+        let embed = vec![if let Ok(user_info) = user_info {
+            Embed::builder()
                 .title(String::from("User Info"))
-                .description("".to_owned()
+                .description(String::new()
                 +   "**" + &user_info.username + "**\n"
                 +   "Account ID: " + &user_info.account_id.to_string() + "\n"
                 +   "User ID: " + &user_info.user_id.to_string() + "\n"
@@ -46,16 +41,14 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
                 )
                 .color(0x0055ff)
                 .build()
-                .unwrap()
         } else {
-            EmbedBuilder::default()
+            Embed::builder()
                 .description(String::from("**User invalid or not found. Make sure it's spelled correctly or that it's the right accountID**"))
                 .color(0xff0000)
                 .build()
-                .unwrap()
         }];
 
-        let _ = channel.send_embed_message(embed).await?;
+        channel.send_embed_message(embed).await?;
     }
 
     Ok(())

@@ -1,7 +1,5 @@
 use fluxer_rs::{
-    api::channels::Channel,
-    command,
-    serde::types::message::EmbedBuilder
+    api::channels::Channel, command, serde::types::message::Embed
 };
 
 pub const HELP_MESSAGE_TITLE: &str = "Available Commands";
@@ -18,16 +16,14 @@ pub const HELP_MESSAGE_DESCRIPTION: &str = "
 async fn execute(api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
     let channel = Channel::new(&data.channel_id, api);
-    let embeds = vec![
-        EmbedBuilder::default()
+    let embeds = vec![Embed::builder()
             .title(String::from(HELP_MESSAGE_TITLE))
             .description(String::from(HELP_MESSAGE_DESCRIPTION))
             .color(0xffff00)
             .build()
-            .unwrap()
     ];
 
-    let _ = channel.send_embed_message(embeds).await?;
+    channel.send_embed_message(embeds).await?;
 
     Ok(())
 }

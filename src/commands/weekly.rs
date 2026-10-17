@@ -1,13 +1,11 @@
-use crate::utils::levels::*;
+use crate::utils::levels::{feature_score, verified_coins};
 
 use gdutils::gd::{levels::{calculate_difficulty, calculate_quality, get_timely_level, search_levels}, utils::{GDQuery, TimelyType}};
 
 use time_hms::TimeHms;
 
 use fluxer_rs::{
-    api::channels::Channel,
-    command,
-    serde::types::message::EmbedBuilder
+    api::channels::Channel, command, serde::types::message::Embed
 };
 
 #[command(WeeklyCommand)]
@@ -19,13 +17,13 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let level_info = weekly.level;
     let time_left = weekly.time_left as u64;
 
-    let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').collect::<Vec<_>>()[1].split(':').collect::<Vec<_>>()[1].to_owned();
+    let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
     let difficulty = calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap();
     let quality = calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap();
 
-    let embed = vec![EmbedBuilder::default()
+    let embed = vec![Embed::builder()
         .title(String::from("Weekly"))
-        .description("".to_owned()
+        .description(String::new()
         +   "**" + &level_info.level_name + "**\n"
         +   "ID: " + &level_info.level_id.to_string() + "\n"
         +   "Author: " + &author + "\n"
@@ -42,10 +40,9 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         )
         .color(0x0055ff)
         .build()
-        .unwrap()
     ];
     
-    let _ = channel.send_embed_message(embed).await?;
+    channel.send_embed_message(embed).await?;
     
     Ok(())
 }

@@ -9,8 +9,9 @@ repository = "https://github.com/JuxGD/FluxDash"
 license = "MIT"
 
 [dependencies]
-env_logger = "0.11.9"
-log = "0.4.30"
+itertools = "0.15.0"
+env_logger = "0.11.11"
+log = "0.4.34"
 fluxer-rs = { git = "https://tangled.org/awoo.ren/fluxer-rs" }
 gdutils = "0.4.8"
 dotenvy = "0.15.7"
@@ -20,5 +21,5 @@ serde_json = "1.0.154"
 serde = { version = "1.0.229", features = [ "derive" ] }
 
 [dependencies.tokio]
-version = "1.52.3"
+version = "1.53.3"
 features = ["rt-multi-thread", "macros"]

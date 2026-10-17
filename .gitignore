@@ -2,3 +2,5 @@
 .vscode
 .env
 /target
+guilds_configs
+cache
