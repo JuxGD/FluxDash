@@ -1,8 +1,10 @@
-use std::{collections::HashMap, hash::Hash, thread::sleep};
-use fluxer_rs::{api::{FluxerApiHandler, channels::Channel}, command, serde::types::message::{self, Embed}};
+use std::{collections::HashMap, hash::Hash};
+use fluxer_rs::{api::{FluxerApiHandler, channels::Channel}, command, serde::types::message::Embed};
 use gdutils::gd::{levels::get_timely_level, utils::TimelyType};
 use serde::{Deserialize, Serialize};
 use itertools::Itertools;
+
+use crate::utils::levels::make_level_embed;
 #[command(SetupCommand)]
 pub async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
@@ -79,15 +81,16 @@ pub async fn send_gd_server_update(guild: FluxDashGuildConfig, feature: GDServer
 
         println!("{}", channel.channel_id);
 
-        let action = match feature {
+        match feature {
             GDServerActivity::NewDaily => {
-                get_timely_level(TimelyType::Daily).await?
+                let daily = get_timely_level(TimelyType::Daily).await?;
+                tokio::fs::write("cache/daily.txt", daily.timely_index.to_string()).await?;
+                let level_info = daily.level;
+                channel.send_embed_message(vec![make_level_embed(level_info).await?]).await?;
             },
             _ => return Ok(())
         };
-
-        channel.send_message("test message please ignore").await?;
-    }
+    };
 
     Ok(())
 }

@@ -1,10 +1,11 @@
 use fluxer_rs::{
     api::channels::Channel, error::{CommandHandlerError, FluxerRsError}, gateway::dispatch::DispatchHandlerTrait, high_level::command_handler::CommandHandler, register_commands, serde::types::message::{Embed, MessageData},
 };
+use gdutils::gd::{levels::get_timely_level, utils::TimelyType};
 
-use crate::commands::{
+use crate::{commands::{
     admin_setup::setup::{FluxDashGuildConfig, GDServerActivity, SetupCommand, send_gd_server_update}, aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand,
-};
+}, utils::levels::make_level_embed};
 
 pub struct FluxDashDispatchHandler;
 
@@ -57,18 +58,6 @@ async fn handle_guild_create_dispatch(&self, data: fluxer_rs::serde::types::guil
         let guild = data.id;
         let api = &context.api;
 
-        loop {
-            if tokio::fs::try_exists("guilds_configs").await.unwrap() {
-                let mut guilds_configs = tokio::fs::read_dir("guilds_configs").await.unwrap();
-
-                while let Some(file) = guilds_configs.next_entry().await.unwrap() {
-                    println!("{}", file.file_name().display().to_string() == format!("{guild}.json"));
-                    if file.file_name().display().to_string() == format!("{guild}.json") {
-                        let guild: FluxDashGuildConfig = serde_json::from_slice(&tokio::fs::read(&file.path().display().to_string()).await.unwrap())?;
-                        send_gd_server_update(guild, GDServerActivity::NewDaily, api).await.unwrap();
-                    };
-                };
-            };
-        }
+        Ok(())
     }
 }
