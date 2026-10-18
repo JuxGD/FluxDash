@@ -1,11 +1,10 @@
 use fluxer_rs::{
     api::channels::Channel, error::{CommandHandlerError, FluxerRsError}, gateway::dispatch::DispatchHandlerTrait, high_level::command_handler::CommandHandler, register_commands, serde::types::message::{Embed, MessageData},
 };
-use gdutils::gd::{levels::get_timely_level, utils::TimelyType};
 
-use crate::{commands::{
-    admin_setup::setup::{FluxDashGuildConfig, GDServerActivity, SetupCommand, send_gd_server_update}, aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand,
-}, utils::levels::make_level_embed};
+use crate::commands::{
+    admin_setup::setup::SetupCommand, aredl::AREDLCommand, daily::DailyCommand, event::EventCommand, help::{HELP_MESSAGE_DESCRIPTION, HELP_MESSAGE_TITLE, HelpCommand}, level::LevelCommand, user::UserCommand, weekly::WeeklyCommand,
+};
 
 pub struct FluxDashDispatchHandler;
 
@@ -52,12 +51,5 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
                 }
             }
         }
-    }
-
-async fn handle_guild_create_dispatch(&self, data: fluxer_rs::serde::types::guild::GuildCreateData, context: &fluxer_rs::context::FluxerClientContext, _original_text: String) -> Result<(), FluxerRsError> {
-        let guild = data.id;
-        let api = &context.api;
-
-        Ok(())
     }
 }

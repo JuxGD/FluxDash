@@ -31,7 +31,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
 
         let level = if query.parse::<i32>().is_ok() { download_level_by_id(query).await.unwrap() } else { download_level_by_name(query).await.unwrap() };
         
-        let level_info = build_level(&level_object_to_hashmap(level).unwrap());
+        let level_info = build_level(&level_object_to_hashmap(&level).unwrap());
 
         let embed: Vec<Embed> = if let Ok(level_info) = level_info {
             vec![make_level_embed(level_info).await.unwrap()]

@@ -1,6 +1,6 @@
 [package]
 name = "fluxdash"
-version = "0.3.1"
+version = "0.4.0"
 edition = "2024"
 authors = [ "JuxGD <@JuxGD>" ]
 description = "Geometry Dash bot for Fluxer! (WIP, contributions appreciated!)"
@@ -13,7 +13,7 @@ itertools = "0.15.0"
 env_logger = "0.11.11"
 log = "0.4.34"
 fluxer-rs = { git = "https://tangled.org/awoo.ren/fluxer-rs" }
-gdutils = "0.4.8"
+gdutils = "0.4.11"
 dotenvy = "0.15.7"
 time-hms = "0.3.1"
 color-eyre = "0.6.5"

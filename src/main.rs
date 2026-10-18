@@ -1,22 +1,12 @@
 use color_eyre::eyre::{self, eyre};
-use fluxer_rs::api::FluxerApiHandler;
-use fluxer_rs::api::channels::Channel;
-use fluxer_rs::context::FluxerClientContext;
 use fluxer_rs::high_level::command_handler::CommandHandler;
-use fluxer_rs::serde::types::message::Embed;
-use fluxer_rs::{error::FluxerRsError, context::BotContext, client::FluxerClient};
-use gdutils::gd::levels::get_timely_level;
-use gdutils::gd::utils::TimelyType;
-use itertools::Itertools;
+use fluxer_rs::{context::BotContext, client::FluxerClient};
 use std::env;
 use std::process::exit;
-use std::sync::Arc;
-use std::time::Duration;
 use dotenvy::dotenv;
 
-use crate::commands::admin_setup::setup::{FluxDashGuildConfig, GDServerActivity};
+use crate::commands::admin_setup::setup::send_gd_server_update;
 use crate::dispatch::FluxDashDispatchHandler;
-use crate::utils::levels::make_level_embed;
 
 pub mod commands;
 pub mod dispatch;
@@ -60,40 +50,7 @@ async fn main() -> Result<(), eyre::Report> {
 
     let bot_context = BotContext::new(fluxer_bot_token.clone(), wss_endpoint, api_endpoint, cmd_handler).await?;
 
-    FluxerClient::start(bot_context, FluxDashDispatchHandler, async |api| {println!("starting thing"); let _ = tokio::spawn(daily_thingy(api)).await; }).await;
-
-    Ok(())
-}
-
-async fn daily_thingy(api: Arc<FluxerApiHandler>) -> Result<(), eyre::Report> {
-    if tokio::fs::try_exists("guilds_configs").await? {
-
-        loop {
-            tokio::time::sleep(Duration::from_secs(30)).await;
-
-            let daily = get_timely_level(TimelyType::Daily).await?;
-
-            if tokio::fs::try_exists("cache/daily.txt").await? {
-                if tokio::fs::read_to_string("cache/daily.txt").await? != daily.timely_index.to_string() {
-                    tokio::fs::write("cache/daily.txt", daily.timely_index.to_string()).await?;
-                    
-                    let mut guilds_configs = tokio::fs::read_dir("guilds_configs").await?;
-                    
-                    while let Some(file) = guilds_configs.next_entry().await? {
-                        let guild: FluxDashGuildConfig = serde_json::from_slice(&tokio::fs::read(&file.path().display().to_string()).await?)?;
-
-                        for (channel, config) in guild.channels {
-                            let channel = Channel::new(channel, &api);
-
-                            channel.send_embed_message(vec![Embed::builder().title("New daily level!").build(), make_level_embed(daily.level.clone()).await?]).await?;
-                        }
-                    };
-                };
-            } else {
-                tokio::fs::write("cache/daily.txt", daily.timely_index.to_string()).await?;
-            }
-        };
-    };
+    FluxerClient::start(bot_context, FluxDashDispatchHandler, async |api| {let _ = tokio::spawn(send_gd_server_update(api)).await; }).await;
 
     Ok(())
 }
