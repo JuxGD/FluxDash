@@ -1,6 +1,7 @@
 use std::{collections::HashMap, hash::Hash, sync::Arc};
+use bon_macros::Builder;
 use color_eyre::eyre::{self, eyre};
-use fluxer_rs::{api::{FluxerApiHandler, channels::Channel}, command, serde::types::message::Embed};
+use fluxer_rs::{api::{ApiCall, FluxerApiCallType, FluxerApiHandler, channels::Channel}, command, error::FluxerRsError, serde::types::{common::GuildPropertiesData, message::Embed}};
 use gdutils::gd::{levels::{build_level, download_level_by_id, get_timely_info, level_object_to_hashmap}, utils::{Level, TimelyInfo, TimelyType}};
 use serde::{Deserialize, Serialize};
 use itertools::Itertools;
@@ -9,70 +10,94 @@ use crate::utils::levels::make_timely_level_embed;
 #[command(SetupCommand)]
 pub async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     let data = feedback.data;
-    let role = data.member.as_ref().unwrap().roles.as_ref().unwrap().first().unwrap();
-
-    let channel = Channel::new(&data.channel_id, fluxer_api);
+    let guild: GuildPropertiesData = fluxer_api.execute_call(GetGuild::builder().guild_id(String::from(&data.guild_id.as_ref().unwrap().to_owned())).build()).await?;
+    let message_author = &data.author.as_ref().unwrap().id;
+    let guild_owner = &guild.owner_id;
     
-    let args = &feedback.args;
+    let channel = Channel::new(&data.channel_id, fluxer_api);
 
-    let help_embed = vec![
-        Embed::builder()
-            .title(String::from("gd!setup"))
-            .description("".to_owned()
-        +   "**Usage:**\n"
-        +   "`gd!setup <channel> <features>`: Set up a channel, where `<channel>` is a channel in this guild"
-        +   "and <features> is a comma-separated (without spaces) set of features listed below.")
-            .color(0xffff00)
-            .build(),
+    if message_author == guild_owner {        
+        let args = &feedback.args;
 
-        Embed::builder()
-            .title(String::from("Features"))
-            .description("".to_owned()
-        +   "`NewRates`\n"
-        +   "`NewDerate`\n"
-        +   "`NewDaily`\n"
-        +   "`NewWeekly`\n"
-        +   "`NewEvent`\n"
-        +   "`StarChange`\n"
-        +   "`DemonChange`\n"
-        +   "`QualityChange`\n"
-        +   "`AREDLUpdate`\n")
-            .color(0xffff00)
-            .build()
-    ];
+        let help_embed = vec![
+            Embed::builder()
+                .title(String::from("gd!setup"))
+                .description("".to_owned()
+                +   "**Usage:**\n"
+                +   "`gd!setup <channel> <features>`: Set up a channel, where `<channel>` is a channel in this guild"
+                +   "and <features> is a comma-separated (without spaces) set of features listed below.\n"
+                +   "\n"
+                +   "No two channels in a guild can have the same feature."
+                )
+                .color(0xffff00)
+                .build(),
 
-    if args.len() == 2 {
-        let target_channel = args.first().unwrap();
-        let target_channel = target_channel.replace(['<', '#', '>'], "");
-        let guild = data.guild_id.as_ref().unwrap();
-        let features_buffer: Vec<&str> = args.get(1).unwrap().split(',').unique().collect();
-        
-        let mut features: Vec<GDServerActivity> = vec![];
-        for feature in features_buffer {
-            features.push(feature.into());
-        };
+            Embed::builder()
+                .title(String::from("Features"))
+                .description("".to_owned()
+                +   "`NewDaily`\n"
+                +   "`NewWeekly`\n"
+                +   "`NewEvent`\n"
+                +   "`NewRate` (unimplemented)\n"
+                +   "`NewDerate` (unimplemented)\n"
+                +   "`StarChange` (unimplemented)\n"
+                +   "`DemonChange` (unimplemented)\n"
+                +   "`QualityChange` (unimplemented)\n"
+                +   "`AREDLUpdate` (unimplemented)"
+                )
+                .color(0xffff00)
+                .build()
+        ];
 
-        let mut new_config = FluxDashGuildConfig { global_features: vec![], channels: HashMap::new() };
+        if args.len() == 2 {
+            let target_channel = args.first().unwrap().replace(['<', '#', '>'], "");
+            let guild = data.guild_id.as_ref().unwrap();
+            let features_buffer: Vec<&str> = args.get(1).unwrap().split(',').unique().collect();
+            
+            let mut features: Vec<GDServerActivity> = vec![];
+            for feature in &features_buffer {
+                features.push((*feature).into());
+            };
 
-        if tokio::fs::try_exists(format!("guilds_configs/{guild}.json")).await.unwrap() {
-            let existing_config: FluxDashGuildConfig = serde_json::from_slice(&tokio::fs::read(format!("guilds_configs/{guild}.json")).await.unwrap())?;
+            let mut added_features: Vec<GDServerActivity> = vec![];
 
-            new_config = existing_config.clone();
+            let mut new_config = FluxDashGuildConfig { global_features: vec![], channels: HashMap::new() };
 
-            for feature in features {
-                if !existing_config.global_features.contains(&feature) {
-                    new_config.channels.get_mut(&target_channel).unwrap().features.push(feature);
-                    new_config.global_features.push(feature);
+            if tokio::fs::try_exists(format!("guilds_configs/{guild}.json")).await.unwrap() {
+                let existing_config: FluxDashGuildConfig = serde_json::from_slice(&tokio::fs::read(format!("guilds_configs/{guild}.json")).await.unwrap())?;
+
+                new_config = existing_config.clone();
+
+                if !existing_config.channels.contains_key(&target_channel) {
+                    new_config.channels.insert(target_channel.clone(), FluxDashChannelConfig { features: vec![] });
+                }
+
+                for feature in features {
+                    if !existing_config.global_features.contains(&feature) {
+                        new_config.channels.get_mut(&target_channel).unwrap().features.push(feature);
+                        new_config.global_features.push(feature);
+                        println!("{feature:?}");
+                        added_features.push(feature);
+                    };
                 };
+            } else {
+                new_config.channels.insert(target_channel.to_owned().to_owned(), FluxDashChannelConfig { features: features.clone() });
+                new_config.global_features = features.clone();
+                added_features.append(&mut features);
+            };
+
+            tokio::fs::write(format!("guilds_configs/{guild}.json"), serde_json::ser::to_string_pretty(&new_config)?).await.unwrap();
+
+            if !added_features.is_empty() {
+                channel.send_embed_message(vec![Embed::builder().description(format!("Successfully added channel features {} to channel <#{target_channel}>", added_features.iter().map(|f| String::from(format!("`{:?}` ", f))).collect::<String>()), ).color(0x00ff00).build()]).await?;
+            } else {
+                channel.send_embed_message(vec![Embed::builder().description("Those features are already on this guild!").color(0xff0000).build()]).await?;
             };
         } else {
-            new_config.channels.insert(target_channel.to_owned().to_owned(), FluxDashChannelConfig { features: features.clone() });
-            new_config.global_features = features;
+            channel.send_embed_message(help_embed).await?;
         };
-
-        tokio::fs::write(format!("guilds_configs/{guild}.json"), serde_json::ser::to_string_pretty(&new_config)?).await.unwrap();
     } else {
-        channel.send_embed_message(help_embed).await?;
+        channel.send_embed_message(vec![Embed::builder().description("You are not the owner of this community!").color(0xff0000).build()]).await?;
     };
 
     Ok(())
@@ -232,5 +257,35 @@ pub struct FluxDashGuildConfig {
 pub struct FluxDashChannelConfig {
     pub features: Vec<GDServerActivity>
 }
-// TODO: REMEMBER VERY IMPORTANT add a check to see if a community has already added a feature to a channel, if so prevent it from being added to more channels.
-// no 2 channels that both have daily level updates. this will reduce server load and abuse potential
+
+#[derive(Debug, Clone, Serialize, Deserialize, Builder)]
+pub struct GetGuild {
+    pub guild_id: String
+}
+
+impl ApiCall for GetGuild {
+    type ReturnType = GuildPropertiesData;
+    fn get_req(
+        &self,
+        req: fluxer_rs::reqwest::RequestBuilder,
+        token: &str,
+    ) -> Result<fluxer_rs::reqwest::RequestBuilder, FluxerRsError> {
+        let value = serde_json::to_string(self)?;
+
+        Ok(req
+            .body(value)
+            .header("Authorization", format!("Bot {token}")))
+    }
+
+    fn get_info(&self) -> (impl Into<String>, FluxerApiCallType) {
+        (
+            format!("/guilds/{}", self.guild_id),
+            FluxerApiCallType::Get,
+        )
+    }
+
+    fn get_data(&self, body: &str) -> Result<Self::ReturnType, FluxerRsError> {
+        let value = serde_json::from_str::<GuildPropertiesData>(body)?;
+        Ok(value)
+    }
+}

@@ -10,6 +10,7 @@ pub const HELP_MESSAGE_DESCRIPTION: &str = "
 - `gd!weekly` - Returns weekly level info
 - `gd!event` - Returns event level info
 - `gd!aredl` - AREDL commands
+- `gd!setup` - Set up server updates channels (for guild owner only)
 ";
 
 #[command(HelpCommand)]
