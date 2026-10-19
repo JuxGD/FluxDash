@@ -76,7 +76,6 @@ pub async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) 
                     if !existing_config.global_features.contains(&feature) {
                         new_config.channels.get_mut(&target_channel).unwrap().features.push(feature);
                         new_config.global_features.push(feature);
-                        println!("{feature:?}");
                         added_features.push(feature);
                     };
                 };

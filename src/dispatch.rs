@@ -52,4 +52,10 @@ impl DispatchHandlerTrait for FluxDashDispatchHandler {
             }
         }
     }
+
+    async fn handle_ready_dispatch<'a>(&self, data: fluxer_rs::serde::types::user::ReadyData, _context: &'a fluxer_rs::context::FluxerClientContext, _original_text: String) -> Result<(), FluxerRsError> {
+        // data.sessions.first().unwrap().status = String::from(format!("Dashing along {} guilds", &data.guilds.len().to_string()));
+
+        Ok(())
+    }
 }

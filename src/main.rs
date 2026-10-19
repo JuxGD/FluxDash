@@ -1,6 +1,5 @@
 use color_eyre::eyre::{self, eyre};
-use fluxer_rs::high_level::command_handler::CommandHandler;
-use fluxer_rs::{context::BotContext, client::FluxerClient};
+use fluxer_rs::{context::BotContext, client::FluxerClient, high_level::command_handler::CommandHandler};
 use std::env;
 use std::process::exit;
 use dotenvy::dotenv;

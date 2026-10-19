@@ -1,6 +1,6 @@
 use color_eyre::eyre::eyre;
 use fluxer_rs::serde::types::message::Embed;
-use gdutils::gd::{levels::{calculate_difficulty, calculate_quality, search_levels}, utils::{GDQuery, Level, TimelyInfo, TimelyType}};
+use gdutils::gd::{levels::{calculate_difficulty, calculate_quality, search_levels}, utils::{Difficulty, GDQuery, Level, Quality, TimelyInfo, TimelyType}};
 use time_hms::TimeHms;
 
 pub fn feature_score(feature_score: i32) -> String {
@@ -21,8 +21,33 @@ pub fn verified_coins(verified_coins: bool) -> String {
 
 pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::eyre::Report> {
     let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
-    let difficulty = calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap();
-    let quality = calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap();
+
+    let difficulty = match calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap() {
+        Difficulty::NA => "N/A",
+        Difficulty::Unrated => "Unrated",
+        Difficulty::Easy => "Easy",
+        Difficulty::Normal => "Normal",
+        Difficulty::Hard => "Hard",
+        Difficulty::Harder => "Harder",
+        Difficulty::Insane => "Insane",
+        Difficulty::EasyDemon => "Easy Demon",
+        Difficulty::MediumDemon => "Medium Demon",
+        Difficulty::HardDemon => "Hard Demon",
+        Difficulty::InsaneDemon => "Insane Demon",
+        Difficulty::ExtremeDemon => "Extreme Demon",
+        Difficulty::Auto => "Auto",
+        _ => return Err(eyre!("Unknown level difficulty"))
+
+    };
+
+    let quality = match calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap() {
+        Quality::Normal => "Normal",
+        Quality::Featured => "Featured",
+        Quality::Epic => "Epic",
+        Quality::Legendary => "Legendary",
+        Quality::Mythic => "Mythic",
+        _ => return Err(eyre!("Unknown level quality"))
+    };
     
     Ok(Embed::builder()
         .title(String::from(&level_info.level_name))
@@ -44,9 +69,33 @@ pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::ey
 
 pub async fn make_timely_level_embed(timely_type: TimelyType, level_info: Level, timely_info: TimelyInfo) -> Result<Embed, color_eyre::eyre::Report> {
     let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
-    let difficulty = calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap();
-    let quality = calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap();
+    
+    let difficulty = match calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap() {
+        Difficulty::NA => "N/A",
+        Difficulty::Unrated => "Unrated",
+        Difficulty::Easy => "Easy",
+        Difficulty::Normal => "Normal",
+        Difficulty::Hard => "Hard",
+        Difficulty::Harder => "Harder",
+        Difficulty::Insane => "Insane",
+        Difficulty::EasyDemon => "Easy Demon",
+        Difficulty::MediumDemon => "Medium Demon",
+        Difficulty::HardDemon => "Hard Demon",
+        Difficulty::InsaneDemon => "Insane Demon",
+        Difficulty::ExtremeDemon => "Extreme Demon",
+        Difficulty::Auto => "Auto",
+        _ => return Err(eyre!("Unknown level difficulty"))
 
+    };
+
+    let quality = match calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap() {
+        Quality::Normal => "Normal",
+        Quality::Featured => "Featured",
+        Quality::Epic => "Epic",
+        Quality::Legendary => "Legendary",
+        Quality::Mythic => "Mythic",
+        _ => return Err(eyre!("Unknown level quality"))
+    };
     let timely_type_str: Result<&str, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily => Ok("Daily"),
         TimelyType::Weekly => Ok("Weekly"),
