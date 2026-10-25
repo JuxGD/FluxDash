@@ -18,7 +18,7 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
         make_level_embed(level_info).await.unwrap(),
         Embed::builder()
             .description(String::from("\n")
-            +   "Event #" + &event.timely_index.to_string() + "\n"
+            +   "Event #" + &event.info.timely_index.to_string() + "\n"
         )
         .build()
     ];    

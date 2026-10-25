@@ -1,6 +1,5 @@
-use color_eyre::eyre::eyre;
 use fluxer_rs::serde::types::message::Embed;
-use gdutils::gd::{levels::{calculate_difficulty, calculate_quality, search_levels}, utils::{Difficulty, GDQuery, Level, Quality, TimelyInfo, TimelyType}};
+use gdutils::gd::{levels::search_levels, utils::{Difficulty, GDQuery, Level, Quality, TimelyInfo, TimelyType}};
 use time_hms::TimeHms;
 
 pub fn feature_score(feature_score: i32) -> String {
@@ -22,7 +21,7 @@ pub fn verified_coins(verified_coins: bool) -> String {
 pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::eyre::Report> {
     let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
 
-    let difficulty = match calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap() {
+    let difficulty = match level_info.calculate_difficulty()? {
         Difficulty::NA => "N/A",
         Difficulty::Unrated => "Unrated",
         Difficulty::Easy => "Easy",
@@ -35,18 +34,16 @@ pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::ey
         Difficulty::HardDemon => "Hard Demon",
         Difficulty::InsaneDemon => "Insane Demon",
         Difficulty::ExtremeDemon => "Extreme Demon",
-        Difficulty::Auto => "Auto",
-        _ => return Err(eyre!("Unknown level difficulty"))
+        Difficulty::Auto => "Auto"
 
     };
 
-    let quality = match calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap() {
+    let quality = match level_info.calculate_quality() {
         Quality::Normal => "Normal",
         Quality::Featured => "Featured",
         Quality::Epic => "Epic",
         Quality::Legendary => "Legendary",
-        Quality::Mythic => "Mythic",
-        _ => return Err(eyre!("Unknown level quality"))
+        Quality::Mythic => "Mythic"
     };
     
     Ok(Embed::builder()
@@ -70,7 +67,7 @@ pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::ey
 pub async fn make_timely_level_embed(timely_type: TimelyType, level_info: Level, timely_info: TimelyInfo) -> Result<Embed, color_eyre::eyre::Report> {
     let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
     
-    let difficulty = match calculate_difficulty(level_info.difficulty_numerator.into(), level_info.difficulty_denominator.into(), level_info.auto, level_info.demon).unwrap() {
+    let difficulty = match level_info.calculate_difficulty()? {
         Difficulty::NA => "N/A",
         Difficulty::Unrated => "Unrated",
         Difficulty::Easy => "Easy",
@@ -83,37 +80,32 @@ pub async fn make_timely_level_embed(timely_type: TimelyType, level_info: Level,
         Difficulty::HardDemon => "Hard Demon",
         Difficulty::InsaneDemon => "Insane Demon",
         Difficulty::ExtremeDemon => "Extreme Demon",
-        Difficulty::Auto => "Auto",
-        _ => return Err(eyre!("Unknown level difficulty"))
+        Difficulty::Auto => "Auto"
 
     };
 
-    let quality = match calculate_quality(level_info.feature_score, level_info.epic.into()).unwrap() {
+    let quality = match level_info.calculate_quality() {
         Quality::Normal => "Normal",
         Quality::Featured => "Featured",
         Quality::Epic => "Epic",
         Quality::Legendary => "Legendary",
-        Quality::Mythic => "Mythic",
-        _ => return Err(eyre!("Unknown level quality"))
+        Quality::Mythic => "Mythic"
     };
     let timely_type_str: Result<&str, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily => Ok("Daily"),
         TimelyType::Weekly => Ok("Weekly"),
-        TimelyType::Event => Ok("Event"),
-        TimelyType::Unknown => Err(eyre!("Invalid TimelyType")),
+        TimelyType::Event => Ok("Event")
     };
 
     let time_left: Result<String, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily | TimelyType::Weekly => Ok(format!("Time Left: {}", TimeHms::new(timely_info.time_left as u64))),
-        TimelyType::Event => Ok(String::new()),
-        TimelyType::Unknown => Err(eyre!("Invalid TimelyType")),
+        TimelyType::Event => Ok(String::new())
     };
 
     let timely_index: Result<i32, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily => Ok(timely_info.timely_index),
         TimelyType::Weekly => Ok(timely_info.timely_index - 100000),
-        TimelyType::Event => Ok(timely_info.timely_index - 200000),
-        TimelyType::Unknown => Err(eyre!("Invalid TimelyType")),
+        TimelyType::Event => Ok(timely_info.timely_index - 200000)
     };
 
     Ok(Embed::builder()

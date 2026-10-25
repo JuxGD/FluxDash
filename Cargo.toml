@@ -1,6 +1,6 @@
 [package]
 name = "fluxdash"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2024"
 authors = [ "JuxGD <@JuxGD>" ]
 description = "Geometry Dash bot for Fluxer! (WIP, contributions appreciated!)"
@@ -13,7 +13,7 @@ itertools = "0.15.0"
 env_logger = "0.11.11"
 log = "0.4.34"
 fluxer-rs = { git = "https://tangled.org/awoo.ren/fluxer-rs" }
-gdutils = "0.5.0"
+gdutils = "0.5.1"
 bon = "3.10.2"
 bon-macros = "3.10.2"
 dotenvy = "0.15.7"
@@ -21,4 +21,4 @@ time-hms = "0.3.1"
 color-eyre = "0.6.5"
 serde_json = "1.0.154"
 serde = { version = "1.0.229", features = [ "derive" ] }
-tokio = { version = "1.53.3", features = [ "rt-multi-thread", "macros" ] }
+tokio = { version = "1.54.1", features = [ "rt-multi-thread", "macros", "fs" ] }

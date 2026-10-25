@@ -700,16 +700,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
-name = "errno"
-version = "0.3.14"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "39cab71617ae0d63f51a36d69f866391735b51691dbda63cf6f96d042b63efeb"
-dependencies = [
- "libc",
- "windows-sys 0.61.2",
-]
-
-[[package]]
 name = "event-listener"
 version = "2.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -762,7 +752,7 @@ checksum = "5baebc0774151f905a1a2cc41989300b1e6fbb29aff0ceffa1064fdd3088d582"
 
 [[package]]
 name = "fluxdash"
-version = "0.4.1"
+version = "0.4.2"
 dependencies = [
  "bon",
  "bon-macros",
@@ -928,9 +918,9 @@ dependencies = [
 
 [[package]]
 name = "gdutils"
-version = "0.5.0"
+version = "0.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "411c29a7d431b97dc8d52ed6c65b6a0b86bc08652c0fa7b0c6e8e2c2b781dde7"
+checksum = "f311be8fb5d24a9462a8452735e59d50018f3cef3c11ccdbf8c0d37b8c65ad4a"
 dependencies = [
  "base64 0.23.1",
  "colonparse",
@@ -940,8 +930,8 @@ dependencies = [
  "reqwest",
  "serde",
  "serde_json",
- "tokio",
  "xor_cryptor",
+ "xor_cryptor_keylen",
 ]
 
 [[package]]
@@ -2275,16 +2265,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 
 [[package]]
-name = "signal-hook-registry"
-version = "1.4.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c4db69cba1110affc0e9f7bcd48bbf87b3f4fc7c61fc9155afd4c469eb3d6c1b"
-dependencies = [
- "errno",
- "libc",
-]
-
-[[package]]
 name = "siphasher"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2517,16 +2497,14 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "tokio"
-version = "1.53.3"
+version = "1.54.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce3335fa71841cda333a58d7615b03901380ecf09d59b3296d21f8bbac0dde4e"
+checksum = "b52fd3255258d26fac7264ab5a76b53c13367136dc011d3d6ad4f8ed070396a3"
 dependencies = [
  "bytes",
  "libc",
  "mio",
- "parking_lot",
  "pin-project-lite",
- "signal-hook-registry",
  "socket2",
  "tokio-macros",
  "windows-sys 0.61.2",
@@ -3383,6 +3361,17 @@ name = "xor_cryptor"
 version = "2.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6a6f06bc9d7486866f647f54e837004e5442b688e676d838d6ce3d04575fc5e6"
+dependencies = [
+ "rand 0.8.5",
+ "rand_chacha 0.3.1",
+ "rayon",
+]
+
+[[package]]
+name = "xor_cryptor_keylen"
+version = "2.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9321d3a4a88cdc8adb0142be0fdd73e3365e8fb7e7ad6e0d9236873c47318662"
 dependencies = [
  "rand 0.8.5",
  "rand_chacha 0.3.1",

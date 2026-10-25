@@ -1,6 +1,6 @@
 use crate::utils::levels::make_level_embed;
 
-use gdutils::gd::levels::{download_level_by_id, download_level_by_name, build_level, level_object_to_hashmap};
+use gdutils::gd::{utils::GDQuery, levels::{download_level, build_level, level_object_to_hashmap}};
 
 use fluxer_rs::{
     api::channels::Channel, command, serde::types::message::Embed
@@ -27,9 +27,9 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
     if args.is_empty() {
         let _ = channel.send_embed_message(help_embed).await?;
     } else {
-        let query = args[0];
+        let query = GDQuery::new(args[0]);
 
-        let level = if query.parse::<i32>().is_ok() { download_level_by_id(query).await.unwrap() } else { download_level_by_name(query).await.unwrap() };
+        let level = if query.query.parse::<i32>().is_ok() { download_level(query).await.unwrap() } else { download_level(query).await.unwrap() };
         
         let level_info = build_level(&level_object_to_hashmap(&level).unwrap());
 

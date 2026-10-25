@@ -15,13 +15,13 @@ async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) {
 
     let daily = get_timely_level(TimelyType::Daily).await.unwrap();
     let level_info = daily.level;
-    let time_left = daily.time_left as u64;
+    let time_left = daily.info.time_left as u64;
 
     let embed = vec![
         make_level_embed(level_info).await.unwrap(),
         Embed::builder()
             .description(String::from("\n")
-            +   "Daily #" + &daily.timely_index.to_string() + "\n"
+            +   "Daily #" + &daily.info.timely_index.to_string() + "\n"
             +   "Time Left" + &TimeHms::new(time_left).to_string() + "\n"
         )
         .build()

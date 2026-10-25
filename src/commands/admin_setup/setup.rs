@@ -1,8 +1,8 @@
 use std::{collections::HashMap, hash::Hash, sync::Arc};
 use bon_macros::Builder;
-use color_eyre::eyre::{self, eyre};
+use color_eyre::eyre::eyre;
 use fluxer_rs::{api::{ApiCall, FluxerApiCallType, FluxerApiHandler, channels::Channel}, command, error::FluxerRsError, serde::types::{common::GuildPropertiesData, message::Embed}};
-use gdutils::gd::{levels::{build_level, download_level_by_id, get_timely_info, level_object_to_hashmap}, utils::{Level, TimelyInfo, TimelyType}};
+use gdutils::gd::{levels::{build_level, download_level, get_timely_info, level_object_to_hashmap}, utils::{GDQuery, Level, TimelyInfo, TimelyType}};
 use serde::{Deserialize, Serialize};
 use itertools::Itertools;
 
@@ -102,7 +102,7 @@ pub async fn execute(fluxer_api: &FluxerApiHandler, feedback: &CommandFeedback) 
     Ok(())
 }
 
-pub async fn send_gd_server_update(api: Arc<FluxerApiHandler>) -> Result<(), eyre::Report> {
+pub async fn send_gd_server_update(api: Arc<FluxerApiHandler>) -> Result<(), color_eyre::eyre::Report> {
     if tokio::fs::try_exists("guilds_configs").await? {
         loop {
             let daily = get_timely_info(TimelyType::Daily).await;
@@ -180,19 +180,17 @@ pub async fn send_gd_server_update(api: Arc<FluxerApiHandler>) -> Result<(), eyr
     Ok(())
 }
 
-async fn send_timely_update(timely_info: TimelyInfo, timely_type: TimelyType, guilds_configs: &mut tokio::fs::ReadDir, api: &Arc<FluxerApiHandler>) -> Result<(), eyre::Report> {
-    let level: Result<Level, eyre::Report> = match timely_type {
-        TimelyType::Daily => Ok(build_level(&level_object_to_hashmap(&download_level_by_id("-1").await?)?)?),
-        TimelyType::Weekly => Ok(build_level(&level_object_to_hashmap(&download_level_by_id("-2").await?)?)?),
-        TimelyType::Event => Ok(build_level(&level_object_to_hashmap(&download_level_by_id("-3").await?)?)?),
-        TimelyType::Unknown => Err(eyre!("Invalid TimelyType")),
+async fn send_timely_update(timely_info: TimelyInfo, timely_type: TimelyType, guilds_configs: &mut tokio::fs::ReadDir, api: &Arc<FluxerApiHandler>) -> Result<(), color_eyre::eyre::Report> {
+    let level: Result<Level, color_eyre::eyre::Report> = match timely_type {
+        TimelyType::Daily => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-1")).await?)?)?),
+        TimelyType::Weekly => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-2")).await?)?)?),
+        TimelyType::Event => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-3")).await?)?)?)
     };
 
     let timely_type_str: Result<&str, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily => Ok("Daily"),
         TimelyType::Weekly => Ok("Weekly"),
-        TimelyType::Event => Ok("Event"),
-        TimelyType::Unknown => Err(eyre!("Invalid TimelyType")),
+        TimelyType::Event => Ok("Event")
     };
 
     let timely_type_str = timely_type_str?;
