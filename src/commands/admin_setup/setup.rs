@@ -1,8 +1,7 @@
 use std::{collections::HashMap, hash::Hash, sync::Arc};
 use bon_macros::Builder;
-use color_eyre::eyre::eyre;
 use fluxer_rs::{api::{ApiCall, FluxerApiCallType, FluxerApiHandler, channels::Channel}, command, error::FluxerRsError, serde::types::{common::GuildPropertiesData, message::Embed}};
-use gdutils::gd::{levels::{build_level, download_level, get_timely_info, level_object_to_hashmap}, utils::{GDQuery, Level, TimelyInfo, TimelyType}};
+use gdutils::gd::{levels::{build_level, download_level, get_timely_info}, utils::{GDQuery, Level, TimelyInfo, TimelyType, hashmap_from}};
 use serde::{Deserialize, Serialize};
 use itertools::Itertools;
 
@@ -182,9 +181,9 @@ pub async fn send_gd_server_update(api: Arc<FluxerApiHandler>) -> Result<(), col
 
 async fn send_timely_update(timely_info: TimelyInfo, timely_type: TimelyType, guilds_configs: &mut tokio::fs::ReadDir, api: &Arc<FluxerApiHandler>) -> Result<(), color_eyre::eyre::Report> {
     let level: Result<Level, color_eyre::eyre::Report> = match timely_type {
-        TimelyType::Daily => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-1")).await?)?)?),
-        TimelyType::Weekly => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-2")).await?)?)?),
-        TimelyType::Event => Ok(build_level(&level_object_to_hashmap(&download_level(GDQuery::id("-3")).await?)?)?)
+        TimelyType::Daily => Ok(build_level(&hashmap_from(&download_level(GDQuery::id(&-1)).await?)?)?),
+        TimelyType::Weekly => Ok(build_level(&hashmap_from(&download_level(GDQuery::id(&-2)).await?)?)?),
+        TimelyType::Event => Ok(build_level(&hashmap_from(&download_level(GDQuery::id(&-3)).await?)?)?)
     };
 
     let timely_type_str: Result<&str, color_eyre::eyre::Report> = match timely_type {
