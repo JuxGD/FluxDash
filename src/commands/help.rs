@@ -5,7 +5,7 @@ use fluxer_rs::{
 pub const HELP_MESSAGE_TITLE: &str = "Available Commands";
 pub const HELP_MESSAGE_DESCRIPTION: &str = "
 - `gd!level <levelID/levelname>` - Returns requested level info
-- `gd!user <userID/username>` - Returns requested user's stats
+- `gd!user <accountID/username>` - Returns requested user's stats
 - `gd!daily` - Returns daily level info
 - `gd!weekly` - Returns weekly level info
 - `gd!event` - Returns event level info

@@ -1,5 +1,5 @@
 use fluxer_rs::serde::types::message::Embed;
-use gdutils::gd::{levels::search_levels, utils::{Difficulty, GDQuery, Level, Quality, TimelyInfo, TimelyType}};
+use gdutils::gd::{levels::search_levels, users::get_user, utils::{Difficulty, GDQuery, GDUtilsError, Level, Quality, TimelyInfo, TimelyType}};
 use time_hms::TimeHms;
 
 pub fn feature_score(feature_score: i32) -> String {
@@ -19,7 +19,12 @@ pub fn verified_coins(verified_coins: bool) -> String {
 }
 
 pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::eyre::Report> {
-    let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
+    let author_id = search_levels(GDQuery::id(&level_info.level_id)).await?.creators.first().ok_or(GDUtilsError::GenericError(String::from("Something went wrong getting the info for the level creator")))?.user_id;
+    
+    let author = match get_user(GDQuery::id(&author_id)).await {
+        Ok(s) => s.username,
+        Err(_) => "(Invalid User)".into()
+    };
 
     let difficulty = match level_info.calculate_difficulty()? {
         Difficulty::NA => "N/A",
@@ -65,8 +70,13 @@ pub async fn make_level_embed(level_info: Level) -> Result<Embed, color_eyre::ey
 }
 
 pub async fn make_timely_level_embed(timely_type: TimelyType, level_info: Level, timely_info: TimelyInfo) -> Result<Embed, color_eyre::eyre::Report> {
-    let author = search_levels(GDQuery::new(&level_info.level_id.to_string())).await.unwrap().split('#').nth(1).unwrap().split(':').nth(1).unwrap().to_owned();
+    let author_id = search_levels(GDQuery::id(&level_info.level_id)).await?.creators.first().ok_or(GDUtilsError::GenericError(String::from("Something went wrong getting the info for the level creator")))?.user_id;
     
+    let author = match get_user(GDQuery::id(&author_id)).await {
+        Ok(s) => s.username,
+        Err(_) => "(Invalid User)".into()
+    };
+
     let difficulty = match level_info.calculate_difficulty()? {
         Difficulty::NA => "N/A",
         Difficulty::Unrated => "Unrated",
@@ -91,6 +101,7 @@ pub async fn make_timely_level_embed(timely_type: TimelyType, level_info: Level,
         Quality::Legendary => "Legendary",
         Quality::Mythic => "Mythic"
     };
+    
     let timely_type_str: Result<&str, color_eyre::eyre::Report> = match timely_type {
         TimelyType::Daily => Ok("Daily"),
         TimelyType::Weekly => Ok("Weekly"),
